@@ -2,7 +2,8 @@
   <v-stage ref="stage" :config="configKonva">
     <v-layer>
       // 自作コンポーネントに値を渡す
-      <cat text="This is cat" x="100" y="10"></cat>
+      // v-bindを使って数値型や関数型を明示する
+      <cat text="This is cat" v-bind:x=100 v-bind:y=10 v-bind:callback="callBackFromCat"></cat>
       <v-circle :config="configCircle"></v-circle>
       <v-text id="text_example1" ref="text_example1" :config="configText"></v-text>
       <v-line ref="anim_example1" @mousemove="handleMouseMove" :config="{
@@ -22,6 +23,7 @@
 
 <script>
 import Konva from 'konva'
+
 // 自作コンポーネントのインポート
 import cat from './Cat'
 
@@ -90,6 +92,9 @@ export default {
       // const node = stage.children[1].children[0]
       this.$data.blur += 0.1
       node.blurRadius(this.$data.blur)
+    },
+    callBackFromCat (event) {
+      this.$toasted.show('Hi this is call back from cat component')
     }
   }
 }
