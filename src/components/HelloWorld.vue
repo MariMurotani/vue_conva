@@ -1,6 +1,8 @@
 <template>
   <v-stage ref="stage" :config="configKonva">
     <v-layer>
+      // 自作コンポーネントに値を渡す
+      <cat text="This is cat" x="100" y="10"></cat>
       <v-circle :config="configCircle"></v-circle>
       <v-text id="text_example1" ref="text_example1" :config="configText"></v-text>
       <v-line ref="anim_example1" @mousemove="handleMouseMove" :config="{
@@ -20,8 +22,14 @@
 
 <script>
 import Konva from 'konva'
+// 自作コンポーネントのインポート
+import cat from './Cat'
 
 export default {
+  // 自作コンポーネントを利用可能にする
+  components: {
+    cat
+  },
   data () {
     return {
       configKonva: {
