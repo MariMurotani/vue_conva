@@ -90,9 +90,12 @@ export default {
   },
   mounted () {
   },
-  computed () {
+  computed: {
   },
   methods: {
+    reserve: function () {
+
+    }
   }
 }
 </script>

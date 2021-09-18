@@ -46,7 +46,7 @@
       >
         <v-list-item href="https://fonts.google.com/icons" target="_blank">
           <v-list-item-icon>
-            <v-icon>{{ mdiLaunch }}</v-icon>
+            <v-icon>{{ launch }}</v-icon>
           </v-list-item-icon>
 
           <v-list-item-content>
@@ -99,7 +99,7 @@ export default {
   },
   mounted () {
   },
-  computed () {
+  computed: {
   },
   methods: {
   }

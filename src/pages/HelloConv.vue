@@ -80,7 +80,7 @@ export default {
   },
   watch () {
   },
-  computed () {
+  computed: {
   },
   methods: {
     handleMouseMove (event) {
