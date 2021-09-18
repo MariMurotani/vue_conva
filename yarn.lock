@@ -108,6 +108,21 @@
     lodash "^4.2.0"
     to-fast-properties "^2.0.0"
 
+"@fortawesome/fontawesome-free@^5.15.4":
+  version "5.15.4"
+  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-free/-/fontawesome-free-5.15.4.tgz#ecda5712b61ac852c760d8b3c79c96adca5554e5"
+  integrity sha512-eYm8vijH/hpzr/6/1CJ/V/Eb1xQFW2nnUKArb3z+yUWv7HTwj6M7SP957oMjfZjAHU6qpoNc2wQvIxBLWYa/Jg==
+
+"@mdi/font@^6.1.95":
+  version "6.1.95"
+  resolved "https://registry.yarnpkg.com/@mdi/font/-/font-6.1.95.tgz#665b7dc13b2d1d1ebefcfac5a68c1013581aaa96"
+  integrity sha512-L3cg9qoUEp5MZHvu6rtuobTtPBmq0ATau5ZrHmsaE6gCRs90T4JBWyzV8WCMEjZoy5+zA+/cvtCUtD/+WVaQ9Q==
+
+"@mdi/js@^6.1.95":
+  version "6.1.95"
+  resolved "https://registry.yarnpkg.com/@mdi/js/-/js-6.1.95.tgz#cc847be9442f5e3f3dfb43448558ae89fd086c3f"
+  integrity sha512-e6ZXoNB9uciA4smHHVkZWyYX/RRZsza8XfLvnOuvdLQttpzRKTqR26jG/COL0o4ES9vbAk9PX5mXTEstg0TCsg==
+
 "@types/json5@^0.0.29":
   version "0.0.29"
   resolved "https://registry.yarnpkg.com/@types/json5/-/json5-0.0.29.tgz#ee28707ae94e11d2b827bcbe5270bcea7f3e71ee"
@@ -5598,6 +5613,11 @@ map-visit@^1.0.0:
   integrity sha1-7Nyo8TFE5mDxtb1B8S80edmN+48=
   dependencies:
     object-visit "^1.0.0"
+
+material-design-icons-iconfont@^6.1.0:
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/material-design-icons-iconfont/-/material-design-icons-iconfont-6.1.0.tgz#ffad21a71f2000336fd410cbeba36ddbf301f0f2"
+  integrity sha512-wRJtOo1v1ch+gN8PRsj0IGJznk+kQ8mz13ds/nuhLI+Qyf/931ZlRpd92oq0IRPpZIb+bhX8pRjzIVdcPDKmiQ==
 
 math-expression-evaluator@^1.2.14:
   version "1.3.8"

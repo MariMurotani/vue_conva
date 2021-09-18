@@ -46,7 +46,7 @@ export default {
   computed: {
     // 受け取ったプロパティを演算
     textConfig: function () {
-      return { x: this.$props.x + this.$data.counter * 10, text: this.$props.text + 'ฅ^•ω•^ฅ'}
+      return {x: this.$props.x + this.$data.counter * 10, text: this.$props.text + 'ฅ^•ω•^ฅ'}
     }
   },
   methods: {
