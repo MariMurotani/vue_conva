@@ -1,13 +1,19 @@
 <template>
-  <splitpanes class="default-theme" style="height: 400px">
+  <splitpanes class="default-theme" style="height: 550px">
     <pane min-size="20">
-      <card-type1 class="card-type1"></card-type1>
+        <v-row>
+          <v-col class="mx-1">
+            <card-type1 class="card-type1"></card-type1>
+          </v-col>
+          <v-col class="mx-1 my-1">
+            <card-type1 class="card-type1"></card-type1>
+          </v-col>
+        </v-row>
     </pane>
     <pane>
       <splitpanes horizontal>
         <pane>2</pane>
         <pane>3</pane>
-        <pane>4</pane>
       </splitpanes>
     </pane>
     <pane>5</pane>
@@ -45,10 +51,10 @@ export default {
 }
 </script>
 <style>
-  .splitpanes__pane {
-    justify-content: center;
-    align-items: center;
-    display: flex;
-    overflow-y: scroll;
-  }
+.splitpanes__pane {
+  justify-content: center;
+  align-items: start;
+  display: flex;
+  overflow-y: scroll;
+}
 </style>

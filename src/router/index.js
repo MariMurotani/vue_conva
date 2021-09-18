@@ -13,7 +13,7 @@ Vue.use(Vuetify)
 export default new Router({
   routes: [
     {
-      path: '/conv',
+      path: '/vueconv',
       name: 'HelloConv',
       component: HelloConv
     },

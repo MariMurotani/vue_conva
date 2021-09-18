@@ -40,20 +40,27 @@
 
       <v-divider></v-divider>
 
-      <v-list-item href="https://fonts.google.com/icons" target="_blank">
-        <v-list-item-content>
-          <v-list-item-title class="text-h6">
-            マテリアルアイコン
-          </v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
+      <v-list
+        dense
+        nav
+      >
+        <v-list-item href="https://fonts.google.com/icons" target="_blank">
+          <v-list-item-icon>
+            <v-icon>{{ mdiLaunch }}</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>マテリアルアイコン</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
 
     </v-navigation-drawer>
   </v-card>
 </template>
 
 <script>
-import { mdiAccount, mdiCheck, mdiViewDashboard, mdiImageAlbum, mdiInformation, mdiHelpCircleOutline, mdiLink } from '@mdi/js'
+import { mdiAccount, mdiCheck, mdiViewDashboard, mdiImageAlbum, mdiInformation, mdiHelpCircleOutline, mdiLink, mdiLaunch } from '@mdi/js'
 
 export default {
   name: 'left-menu',
@@ -66,6 +73,7 @@ export default {
       check: mdiCheck,
       dashboard: mdiViewDashboard,
       link: mdiLink,
+      launch: mdiLaunch,
       items: [
         {
           title: 'VueConv',
