@@ -1,7 +1,8 @@
 <template>
   <div id="app">
     <!-- <img src="./assets/logo.png"> -->
-    <h1>Test Application</h1>
+    <h1>Test Application for Quick study</h1>
+    [ <router-link to="/conv">VueConv</router-link> | <router-link to="/vuetify">Vuetify</router-link> ]
     <router-view/>
   </div>
 </template>

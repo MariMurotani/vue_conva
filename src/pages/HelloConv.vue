@@ -20,12 +20,11 @@
     </v-layer>
   </v-stage>
 </template>
-
 <script>
 import Konva from 'konva'
 
 // 自作コンポーネントのインポート
-import cat from './Cat'
+import cat from '../components/Cat'
 
 export default {
   // 自作コンポーネントを利用可能にする
@@ -79,6 +78,10 @@ export default {
       stage.add(layer)
     })
   },
+  watch () {
+  },
+  computed () {
+  },
   methods: {
     handleMouseMove (event) {
       const mousePos = this.$refs.stage.getNode().getPointerPosition()
@@ -98,5 +101,4 @@ export default {
     }
   }
 }
-
 </script>
