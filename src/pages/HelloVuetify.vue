@@ -1,21 +1,26 @@
 <template>
-  <div class="content_main">
-    test
-    <v-subheader>SubHeaderTest</v-subheader>
-    <v-skeleton-loader></v-skeleton-loader>
-    <v-icon aria-hidden="false">
-      mdi-account
-    </v-icon>
-    <v-icon>{{ account }}</v-icon>
-    <v-icon>{{ check }}</v-icon>
-  </div>
+  <splitpanes class="default-theme" style="height: 400px">
+    <pane min-size="20">1</pane>
+    <pane>
+      <splitpanes horizontal>
+        <pane>2</pane>
+        <pane>3</pane>
+        <pane>4</pane>
+      </splitpanes>
+    </pane>
+    <pane>5</pane>
+  </splitpanes>
 </template>
 <script>
 import { mdiAccount, mdiCheck } from '@mdi/js'
+import { Splitpanes, Pane } from 'splitpanes'
+import 'splitpanes/dist/splitpanes.css'
 
 export default {
   // 自作コンポーネントを利用可能にする
   components: {
+    Splitpanes,
+    Pane
   },
   data () {
     return {
@@ -35,3 +40,6 @@ export default {
   }
 }
 </script>
+<style>
+  splitpanes {}
+</style>
