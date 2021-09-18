@@ -1,6 +1,8 @@
 <template>
   <splitpanes class="default-theme" style="height: 400px">
-    <pane min-size="20">1</pane>
+    <pane min-size="20">
+      <card-type1 class="card-type1"></card-type1>
+    </pane>
     <pane>
       <splitpanes horizontal>
         <pane>2</pane>
@@ -15,12 +17,14 @@
 import { mdiAccount, mdiCheck } from '@mdi/js'
 import { Splitpanes, Pane } from 'splitpanes'
 import 'splitpanes/dist/splitpanes.css'
+import CardType1 from '../components/CardType1'
 
 export default {
   // 自作コンポーネントを利用可能にする
   components: {
     Splitpanes,
-    Pane
+    Pane,
+    CardType1
   },
   data () {
     return {
@@ -41,5 +45,10 @@ export default {
 }
 </script>
 <style>
-  splitpanes {}
+  .splitpanes__pane {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    overflow-y: scroll;
+  }
 </style>
