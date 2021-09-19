@@ -13,13 +13,13 @@ Vue.use(Vuetify)
 export default new Router({
   routes: [
     {
-      path: '/vueconv',
-      name: 'HelloConv',
+      path: '/vueconva',
+      name: 'HelloConva',
       component: HelloConv
     },
     {
       path: '/vuetify',
-      name: 'HelloConv',
+      name: 'HelloVuetify',
       component: HelloVuetify
     }
   ]

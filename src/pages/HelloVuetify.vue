@@ -18,12 +18,19 @@
             </transition-group>
           </draggable>
         </pane>
-        <pane>3</pane>
+        <pane>
+          <blockquote>段落段落段落段落段落段落段落</blockquote>
+          <p>段落段落段落段落段<var>$段落</var>落段落段落段落</p>
+          <code>
+            bundle exec rake db:migrate
+          </code>
+          <kbd>ユーザー入力ユーザー入力ユーザー入力</kbd>
+        </pane>
       </splitpanes>
     </pane>
     <pane>
       <draggable>
-        <transition-group>
+        <transition-group transition="scale-transition">
           <div v-for="element in cards" :key="element.id" :move="checkMove">
             <card-type2 :title="element.name" :text="element.text" class="mx-1 my-1"></card-type2>
           </div>

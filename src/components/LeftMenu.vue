@@ -76,9 +76,9 @@ export default {
       launch: mdiLaunch,
       items: [
         {
-          title: 'VueConv',
+          title: 'VueConva',
           icon: mdiImageAlbum,
-          link: '/vueconv'
+          link: '/vueconva'
         },
         {
           title: 'Vuetify',

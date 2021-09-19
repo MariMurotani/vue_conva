@@ -28,6 +28,16 @@
         </div>
       </v-row>
     </v-card-text>
+
+    <!-- 参考: https://into-the-program.com/vuetify-button-align/ -->
+    <v-card-actions>
+      <v-switch
+        v-model="cycle"
+        label="Cycle Slides"
+        inset
+        class="ml-auto"
+      ></v-switch>
+    </v-card-actions>
   </v-card>
 </template>
 
