@@ -46,7 +46,7 @@
       >
         <v-list-item href="https://fonts.google.com/icons" target="_blank">
           <v-list-item-icon>
-            <v-icon>{{ launch }}</v-icon>
+            <v-icon>mdi-launch</v-icon>
           </v-list-item-icon>
 
           <v-list-item-content>
@@ -60,7 +60,6 @@
 </template>
 
 <script>
-import { mdiAccount, mdiCheck, mdiViewDashboard, mdiImageAlbum, mdiInformation, mdiHelpCircleOutline, mdiLink, mdiLaunch } from '@mdi/js'
 
 export default {
   name: 'left-menu',
@@ -69,25 +68,20 @@ export default {
   },
   data: function () {
     return {
-      account: mdiAccount,
-      check: mdiCheck,
-      dashboard: mdiViewDashboard,
-      link: mdiLink,
-      launch: mdiLaunch,
       items: [
         {
           title: 'VueConva',
-          icon: mdiImageAlbum,
+          icon: 'mdi-image-album',
           link: '/vueconva'
         },
         {
           title: 'Vuetify',
-          icon: mdiInformation,
+          icon: 'mdi-information',
           link: '/vuetify'
         },
         {
           title: 'Other',
-          icon: mdiHelpCircleOutline,
+          icon: 'mdi-help-circle-outline',
           link: '/other'
         }
       ]

@@ -33,7 +33,15 @@
         $ • Italian, Cafe
       </div>
 
-      <div>Small plates, salads & sandwiches - an intimate setting with 12 indoor seats plus patio seating.</div>
+      <v-expansion-panels>
+        <v-expansion-panel>
+          <v-expansion-panel-header expand-icon="mdi-menu-down">Meu Details</v-expansion-panel-header>
+          <v-expansion-panel-content>
+            Small plates, salads & sandwiches - an intimate setting with 12 indoor seats plus patio seating.
+          </v-expansion-panel-content>
+        </v-expansion-panel>
+      </v-expansion-panels>
+
     </v-card-text>
 
     <v-divider class="mx-4"></v-divider>
@@ -81,7 +89,9 @@ export default {
   data: function () {
     return {
       loading: false,
-      selection: 1
+      selection: 1,
+      panel: [0, 1],
+      readonly: false
     }
   },
   watch: {
