@@ -8,7 +8,7 @@
       <v-list-item href="">
         <v-list-item-content>
           <v-list-item-title class="text-h6">
-            <v-icon>{{ dashboard }}</v-icon>
+            <v-icon>mdi-dashboard</v-icon>
             <router-link to="/conv">TOP</router-link>
           </v-list-item-title>
           <v-list-item-subtitle>

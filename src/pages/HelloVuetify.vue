@@ -13,6 +13,7 @@
     <pane>
       <splitpanes horizontal>
         <pane>
+          <file-loader></file-loader>
           <draggable>
             <transition-group>
             </transition-group>
@@ -45,6 +46,7 @@ import { Splitpanes, Pane } from 'splitpanes'
 import 'splitpanes/dist/splitpanes.css'
 import CardType1 from '../components/CardType1'
 import CardType2 from '../components/CardType2'
+import FileLoader from '../components/FileLoader'
 import draggable from 'vuedraggable'
 
 export default {
@@ -54,6 +56,7 @@ export default {
     Pane,
     CardType1,
     CardType2,
+    FileLoader,
     draggable
   },
   data () {
