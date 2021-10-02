@@ -9089,6 +9089,16 @@ vuetify@^2.5.8:
   resolved "https://registry.yarnpkg.com/vuetify/-/vuetify-2.5.8.tgz#a23e6a7e77b77de0744b53cf1e7c9d40efac0635"
   integrity sha512-paLmNhKTYFD41+14rIHnCo+P1jHbUzwBiMowxs5qXVq8RdRMqRmcy05Sfse1WUu90amPGK2fIFQq5rL2N8zqZg==
 
+vuex-persistent@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/vuex-persistent/-/vuex-persistent-0.0.1.tgz#f459bb5ce5be15446b508440e9043656e3de7b2f"
+  integrity sha512-2OzVB7hfJhP4Nzn6f5STNK9WpwEs/eFoxgJczOxNX3vFOskgN2aVnipcMR9QgHd4ObCDUFyXlHUPrMjgt6vYCg==
+
+vuex@^3.6.2:
+  version "3.6.2"
+  resolved "https://registry.yarnpkg.com/vuex/-/vuex-3.6.2.tgz#236bc086a870c3ae79946f107f16de59d5895e71"
+  integrity sha512-ETW44IqCgBpVomy520DT5jf8n0zoCac+sxWnn+hMe/CzaSejb/eVw2YToiXYX+Ex/AuHHia28vWTq4goAexFbw==
+
 w3c-hr-time@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/w3c-hr-time/-/w3c-hr-time-1.0.2.tgz#0a89cdf5cc15822df9c360543676963e0cc308cd"

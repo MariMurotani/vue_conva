@@ -1,14 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Vuetify from 'vuetify'
-import 'vuetify/dist/vuetify.min.css'
 import HelloConv from '@/pages/HelloConv'
 import HelloVuetify from '@/pages/HelloVuetify'
-import Toasted from 'vue-toasted'
+import LayoutVuetify from '@/pages/LayoutVuetify'
 
 Vue.use(Router)
-Vue.use(Toasted)
-Vue.use(Vuetify)
 
 export default new Router({
   routes: [
@@ -21,6 +17,11 @@ export default new Router({
       path: '/vuetify',
       name: 'HelloVuetify',
       component: HelloVuetify
+    },
+    {
+      path: '/layout_vuetify',
+      name: 'LayoutVuetify',
+      component: LayoutVuetify
     }
   ]
 })

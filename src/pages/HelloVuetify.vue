@@ -1,5 +1,5 @@
 <template>
-  <splitpanes class="default-theme" :style="{height:editor_height}">
+  <splitpanes class="default-theme" :style="{height: editor_height}">
     <pane min-size="20">
         <v-row>
           <v-col class="mx-1 my-1">
@@ -20,7 +20,7 @@
           </draggable>
         </pane>
         <pane>
-          <blockquote>段落段落段落段落段落段落段落</blockquote>
+          <blockquote> {{ test() }}</blockquote>
           <p>段落段落段落段落段<var>$段落</var>落段落段落段落</p>
           <code>
             bundle exec rake db:migrate
@@ -84,26 +84,21 @@ export default {
   created () {
   },
   mounted () {
-    window.addEventListener('resize', this.handleResize)
-  },
-  beforeDestroy: function () {
-    window.removeEventListener('resize', this.handleResize)
   },
   computed: {
     editor_height: function () {
-      return (this.height * 0.85) + 'px'
+      return (this.$store.state.windowHeight * 0.85) + 'px'
     },
     card_margin: function () {
       return 'mx-1 my-1'
     }
   },
   methods: {
-    handleResize: function () {
-      this.width = window.innerWidth
-      this.height = window.innerHeight
-    },
-    checkMove: function (e) {
+    checkMove (e) {
       console.log(e)
+    },
+    test () {
+      return this.$store.state
     }
   }
 }

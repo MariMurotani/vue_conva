@@ -80,6 +80,11 @@ export default {
           link: '/vuetify'
         },
         {
+          title: 'LayoutVuetify',
+          icon: 'mdi-information',
+          link: '/layout_vuetify'
+        },
+        {
           title: 'Other',
           icon: 'mdi-help-circle-outline',
           link: '/other'

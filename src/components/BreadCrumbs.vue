@@ -4,9 +4,6 @@
       :items="items"
       divider=" > "
     ></v-breadcrumbs>
-    <v-overlay absolut>
-      <v-btn>Overlay</v-btn>
-    </v-overlay>
   </v-layout>
 </template>
 

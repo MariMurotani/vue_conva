@@ -30,11 +30,32 @@
 <script>
 import leftMenu from './components/LeftMenu'
 import BreadCrumbs from './components/BreadCrumbs'
+
 export default {
   name: 'App',
   components: {
     leftMenu,
     BreadCrumbs
+  },
+  data () {
+    return {
+    }
+  },
+  watch: {
+  },
+  mounted () {
+    window.addEventListener('resize', this.handleResize)
+  },
+  beforeDestroy: function () {
+    window.removeEventListener('resize', this.handleResize)
+  },
+  computed: {
+  },
+  methods: {
+    handleResize: function () {
+      this.$store.commit('setWindowWidth', window.innerWidth)
+      this.$store.commit('setWindowHeight', window.innerHeight)
+    }
   }
 }
 </script>
