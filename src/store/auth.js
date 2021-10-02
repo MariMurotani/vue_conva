@@ -26,7 +26,11 @@ export default new Vuex.Store({
   },
 
   actions: {
-    /* fetchSomething (context, amount) {
-    } */
+    // 認証APIを呼び出すstore
+    fetchSomething (context, amount) {
+      // fetch data ffrom API then commit
+      // context.commit('setWindowSize', 0, 0)
+      //
+    }
   }
 })
