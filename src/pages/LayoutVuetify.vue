@@ -1,20 +1,12 @@
 <template>
-    <v-container class="grey">
-      <v-row>
-        <v-col>
-        </v-col>
-      </v-row>
-      <v-row no-gutters>
-        <v-col>
-          <card-list></card-list>
-        </v-col>
-        <v-col order="12">
-        </v-col>
-        <v-col order="1">
-
-        </v-col>
-      </v-row>
-    </v-container>
+  <v-layout align-left>
+    <v-flex align-self-start>
+      <card-list></card-list>
+    </v-flex>
+    <v-flex align-self-start>
+      <card-list></card-list>
+    </v-flex>
+  </v-layout>
 </template>
 <script>
 import CardList from '../components/CardList'

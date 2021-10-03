@@ -1,12 +1,11 @@
 <template>
-  <v-row>
-    <v-col class="mx-1 my-1">
-      <card-type3></card-type3>
-    </v-col>
-    <v-col class="mx-1 my-1">
-      <card-type3></card-type3>
-    </v-col>
-  </v-row>
+  <v-list dense>
+    <v-list-item v-for="item in 5">
+      <v-list-item-content>
+        <card-type3></card-type3>
+      </v-list-item-content>
+    </v-list-item>
+  </v-list>
 </template>
 <script>
 import CardType3 from '../components/CardType3'
