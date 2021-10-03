@@ -1,20 +1,21 @@
 <template>
   <v-row>
     <v-col class="mx-1 my-1">
-      <card-type1></card-type1>
+      <card-type3></card-type3>
     </v-col>
     <v-col class="mx-1 my-1">
-      <card-type1></card-type1>
+      <card-type3></card-type3>
     </v-col>
   </v-row>
 </template>
 <script>
-import CardType1 from '../components/CardType1'
+import CardType3 from '../components/CardType3'
+
 export default {
   name: 'card-list',
   // 自作コンポーネントを利用可能にする
   components: {
-    CardType1
+    CardType3
   },
   data () {
     return {}
