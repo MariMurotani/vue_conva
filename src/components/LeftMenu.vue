@@ -85,6 +85,16 @@ export default {
           link: '/layout_vuetify'
         },
         {
+          title: 'Sender',
+          icon: 'mdi-access-point-check',
+          link: '/sender'
+        },
+        {
+          title: 'Receiver',
+          icon: 'mdi-access-point',
+          link: '/receiver'
+        },
+        {
           title: 'Other',
           icon: 'mdi-help-circle-outline',
           link: '/other'

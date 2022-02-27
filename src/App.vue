@@ -12,10 +12,8 @@
 
   <!-- アプリケーションのコンポーネントに基づいてコンテンツのサイズを決定 -->
   <v-main>
-
     <!-- アプリケーションに適切なgutterを提供 -->
     <v-container fluid>
-
       <router-view></router-view>
     </v-container>
   </v-main>

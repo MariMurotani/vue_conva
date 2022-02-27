@@ -1,6 +1,6 @@
 <template>
   <v-list dense>
-    <v-list-item v-for="item in 5">
+    <v-list-item v-for="item in 5" v-bind:key="item">
       <v-list-item-content>
         <card-type3></card-type3>
       </v-list-item-content>
