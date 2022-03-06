@@ -26,6 +26,15 @@
         <pre>
         {{ candidates }}
       </pre>
+      <video
+        playsinline
+        autoplay
+        muted
+        width="100px"
+        height="100px"
+        ref="video"
+        id="video"
+      ></video>
     </v-flex>
   </v-layout>
 </template>
@@ -36,6 +45,7 @@ export default {
   name: 'webrtc',
   data () {
     return {
+      video: null,
       connection: null,
       channel: null,
       receivedMessages: [],
@@ -49,6 +59,13 @@ export default {
   created () {
   },
   mounted () {
+    this.video = this.$refs.video
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+      navigator.mediaDevices.getUserMedia({ video: true }).then(stream => {
+        this.video.srcObject = stream
+        this.video.play()
+      })
+    }
   },
   computed: {
 
