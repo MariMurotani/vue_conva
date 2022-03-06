@@ -5,7 +5,8 @@
         <H1>Receiverのテスト</H1>
       </v-row>
       <v-row align-self-center class="justify-center">
-        <v-btn @click="connectPeers">接続開始</v-btn>
+        <v-btn @click="connectPeers">1. 接続開始</v-btn>
+        <v-btn @click="onStartCreateCandidate">2. Offer StringからICE Candidatesの作成</v-btn>
       </v-row>
       <H3>Connection</H3>
       <pre v-if="connection">
@@ -43,7 +44,8 @@ export default {
       connection: null,
       channel: null,
       receivedMessages: [],
-      candidates: []
+      candidates: [],
+      answer: null
     }
   },
   props: {
@@ -85,18 +87,11 @@ export default {
           }
         ] */
       }
-
       // configを元にRTCPeerConnectionを初期化
       this.connection = new RTCPeerConnection(config)
 
       // Sender側からデータチャネルを受け取った時発火するイベントハンドラ
-      this.connection.ondatachannel = e => {
-        // データチャンネルの生成とイベントハンドラの登録
-        this.channel = e.channel
-        this.channel.onmessage = this.handleMessage
-        this.channel.onopen = this.handlechannelStatusChange
-        this.channel.onclose = this.handlechannelStatusChange
-      }
+      this.connection.ondatachannel = this.receiveChannelCallback
       // Sender側のメディアストリームを受け取った時発火するイベントハンドラ
       this.connection.ontrack = this.handleconnectionTrack
 
@@ -111,6 +106,24 @@ export default {
       }
       console.log(this.connection)
       console.log('onconnect')
+    },
+    onStartCreateCandidate () {
+      this.createICECandidate()
+    },
+    async createICECandidate () {
+      // オファーを受け取ったらそれをリモートのSDPとして登録
+      await this.connection.setRemoteDescription(JSON.parse(this.offerString))
+      // config,データチャネル、メディアストリーム情報を元にしたSDPを作成し、自身のSDPとして登録
+      // 裏でICE Candidatesが作成されるので、自身のonicecandidateが発火される
+      this.answer = await this.connection.createAnswer()
+      this.connection.setLocalDescription(this.answer)
+    },
+    receiveChannelCallback (e) {
+      // データチャンネルの生成とイベントハンドラの登録
+      this.channel = e.channel
+      this.channel.onmessage = this.handleMessage
+      this.channel.onopen = this.handlechannelStatusChange
+      this.channel.onclose = this.handlechannelStatusChange
     },
     handleconnectionTrack (e) {
       console.log('handleconnectionTrack--------------')
