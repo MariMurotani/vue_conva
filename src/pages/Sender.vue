@@ -62,12 +62,6 @@ export default {
   props: {
   },
   watch: {
-    offer (oldValue, newValue) {
-      window.localStorage.setItem('offerString', JSON.stringify(newValue))
-    },
-    candidates (oldValue, newValue) {
-      window.localStorage.setItem('candidatesString', JSON.stringify(newValue))
-    }
   },
   created () {
   },
@@ -84,10 +78,12 @@ export default {
   computed: {
     offerString () {
       // NOTE: 実際にはコピペではなくてAPI経由で受け渡しする必要がある
+      window.localStorage.setItem('offerString', JSON.stringify(this.offer))
       return JSON.stringify(this.offer)
     },
     candidateString () {
       // NOTE: 実際にはコピペではなくてAPI経由で受け渡しする必要がある
+      window.localStorage.setItem('candidatesString', JSON.stringify(this.candidates))
       return JSON.stringify(this.candidates)
     }
   },
