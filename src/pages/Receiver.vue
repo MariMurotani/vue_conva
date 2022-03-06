@@ -14,6 +14,10 @@
         localDescription["sdp"]: {{ connection['localDescription.sdp'] }}
         localDescription["type"]: {{ connection['localDescription.type'] }}
       </pre>
+      <span><v-icon @click="copyToClipboard(offerString)">mdi-content-copy</v-icon>1. Offer</span>
+      <v-text-field v-model="offerString"></v-text-field>
+      <span><v-icon @click="copyToClipboard(candidateString)">mdi-content-copy</v-icon>2. Sender Candidates</span>
+      <v-text-field v-model="candidateString"></v-text-field>
       <H3>Channel</H3>
       <pre>
         {{ channel }}
@@ -51,27 +55,48 @@ export default {
   mounted () {
   },
   computed: {
+    offerString () {
+      return window.localStorage.getItem('offerString')
+    },
+    candidateString () {
+      return window.localStorage.getItem('candidatesString')
+    }
   },
   methods: {
+    copyToClipboard (text) {
+      navigator.clipboard.writeText(text)
+        .then(() => {
+          console.log('copied!')
+        })
+        .catch(e => {
+          console.error(e)
+        })
+    },
     connectPeers () {
       // RTCPeerConnectionのコンフィグを作成。
       // offerToReceiveVideo/Audioの設定を明記する
       // 同NAT内のブラウザ同士で接続するなら、iceServersの記述は不要
       const config = {
         offerToReceiveAudio: 1,
-        offerToReceiveVideo: 0,
-        iceServers: [
+        offerToReceiveVideo: 0
+        /* iceServers: [
           {
             urls: 'stun:stun.l.google.com:19302'
           }
-        ]
+        ] */
       }
 
       // configを元にRTCPeerConnectionを初期化
       this.connection = new RTCPeerConnection(config)
 
       // Sender側からデータチャネルを受け取った時発火するイベントハンドラ
-      this.connection.ondatachannel = this.receiveChannelCallback
+      this.connection.ondatachannel = e => {
+        // データチャンネルの生成とイベントハンドラの登録
+        this.channel = e.channel
+        this.channel.onmessage = this.handleMessage
+        this.channel.onopen = this.handlechannelStatusChange
+        this.channel.onclose = this.handlechannelStatusChange
+      }
       // Sender側のメディアストリームを受け取った時発火するイベントハンドラ
       this.connection.ontrack = this.handleconnectionTrack
 
@@ -87,23 +112,17 @@ export default {
       console.log(this.connection)
       console.log('onconnect')
     },
-    receiveChannelCallback (e) {
-      // データチャンネルの生成とイベントハンドラの登録
-      this.channel = e.channel
-      this.channel.onmessage = this.handleMessage
-      this.channel.onopen = this.handlechannelStatusChange
-      this.channel.onclose = this.handlechannelStatusChange
-    },
     handleconnectionTrack (e) {
+      console.log('handleconnectionTrack--------------')
       // Sender側から来たメディアストリームをthis.mediaStreamに代入
       this.mediaStream = e.streams[0]
     },
     handleMessage (e) {
-      console.log('handleMessage')
+      console.log('handleMessage--------------')
       console.log(e)
     },
     handlechannelStatusChange (e) {
-      console.log('handlechannelStatusChange')
+      console.log('handlechannelStatusChange----------')
       console.log(e)
     }
   }

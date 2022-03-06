@@ -9,11 +9,16 @@
       </v-row>
       <H3>Connection</H3>
       <pre v-if="connection">
+        connectionState: {{ connection['connectionState'] }}
         iceConnectionState: {{ connection['iceConnectionState'] }}
         iceGatheringState: {{ connection['iceGatheringState'] }}
-        localDescription["sdp"]: {{ connection['localDescription.sdp'] }}
-        localDescription["type"]: {{ connection['localDescription.type'] }}
+        currentLocalDescription: {{ connection['currentLocalDescription'] }}
+        currentRemoteDescription: {{ connection['currentRemoteDescription'] }}
       </pre>
+      <span><v-icon @click="copyToClipboard(offerString)">mdi-content-copy</v-icon>1. Offer</span>
+      <v-text-field v-model="offerString"></v-text-field>
+      <span><v-icon @click="copyToClipboard(candidateString)">mdi-content-copy</v-icon>2. Sender Candidates</span>
+      <v-text-field v-model="candidateString"></v-text-field>
       <H3>Channel</H3>
       <pre>
         {{ channel }}
@@ -47,6 +52,8 @@ export default {
     return {
       video: null,
       connection: null,
+      localDescription: '',
+      offer: '',
       channel: null,
       receivedMessages: [],
       candidates: []
@@ -55,10 +62,17 @@ export default {
   props: {
   },
   watch: {
+    offer (oldValue, newValue) {
+      window.localStorage.setItem('offerString', JSON.stringify(newValue))
+    },
+    candidates (oldValue, newValue) {
+      window.localStorage.setItem('candidatesString', JSON.stringify(newValue))
+    }
   },
   created () {
   },
   mounted () {
+    // videoタグへカメラーストリームの設定
     this.video = this.$refs.video
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
       navigator.mediaDevices.getUserMedia({ video: true }).then(stream => {
@@ -68,9 +82,25 @@ export default {
     }
   },
   computed: {
-
+    offerString () {
+      // NOTE: 実際にはコピペではなくてAPI経由で受け渡しする必要がある
+      return JSON.stringify(this.offer)
+    },
+    candidateString () {
+      // NOTE: 実際にはコピペではなくてAPI経由で受け渡しする必要がある
+      return JSON.stringify(this.candidates)
+    }
   },
   methods: {
+    copyToClipboard (text) {
+      navigator.clipboard.writeText(text)
+        .then(() => {
+          console.log('copied!')
+        })
+        .catch(e => {
+          console.error(e)
+        })
+    },
     // RTCPeerConnectionのインスタンスを作成する。
     async connectPeers () {
       // RTCPeerConnectionのコンフィグを作成。
@@ -79,15 +109,15 @@ export default {
       // 同NAT内のブラウザ同士で接続するなら、iceServersの記述は不要
       const config = {
         offerToReceiveAudio: 1,
-        offerToReceiveVideo: 0,
-        iceServers: [{
+        offerToReceiveVideo: 0
+        /* iceServers: [{
           urls: 'stun:stun.l.google.com:19302'
-        }]
+        }] */
       }
 
       // configを元にRTCPeerConnectionを初期化
       this.connection = new RTCPeerConnection(config)
-      console.log(this.connection)
+      this.localDescription = this.connection['localDescription']
 
       // データチャンネルの生成とイベントハンドラの登録
       // それぞれ、表示用の変数に追加、代入する
