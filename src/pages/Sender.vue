@@ -5,7 +5,9 @@
         <H1>Senderのテスト</H1>
       </v-row>
       <v-row align-self-center class="justify-center">
-        <v-btn @click="connectPeers">接続開始</v-btn>
+        <v-btn @click="connectPeers">1. 接続開始</v-btn>
+        <v-btn @click="acceptSDPAnswer">2. sdpAnswer受け入れ</v-btn>
+        <v-btn @click="acceptsenderCandidateString">3. Receiver Candidate受け入れ</v-btn>
       </v-row>
       <H3>Connection</H3>
       <pre v-if="connection">
@@ -17,8 +19,12 @@
       </pre>
       <span><v-icon @click="copyToClipboard(offerString)">mdi-content-copy</v-icon>1. Offer</span>
       <v-text-field v-model="offerString"></v-text-field>
-      <span><v-icon @click="copyToClipboard(candidateString)">mdi-content-copy</v-icon>2. Sender Candidates</span>
-      <v-text-field v-model="candidateString"></v-text-field>
+      <span><v-icon @click="copyToClipboard(sdpAnswerString)">mdi-content-copy</v-icon>2. レシーバーのsdpAnswerを貼り付けてね</span>
+      <v-text-field v-model="sdpAnswerString"></v-text-field>
+      <span><v-icon @click="copyToClipboard(senderCandidateString)">mdi-content-copy</v-icon>3. Sender Candidates</span>
+      <v-text-field v-model="senderCandidateString"></v-text-field>
+      <span><v-icon @click="copyToClipboard(receiverCandidateString)">mdi-content-copy</v-icon>4. Receiver Candidateを貼り付けてね</span>
+      <v-text-field v-model="receiverCandidateString"></v-text-field>
       <H3>Channel</H3>
       <pre>
         {{ channel }}
@@ -56,12 +62,21 @@ export default {
       offer: '',
       channel: null,
       receivedMessages: [],
+      sdpAnswer: '',
+      sdpAnswerString: '',
+      receiverCandidateString: '',
       candidates: []
     }
   },
   props: {
   },
   watch: {
+    sdpAnswer (_oldValue, newValue) {
+      // アンサーを受け取ったらそれをリモートのSDPとして登録
+      if (newValue) {
+        this.connection.setRemoteDescription(JSON.parse(newValue))
+      }
+    }
   },
   created () {
   },
@@ -78,12 +93,10 @@ export default {
   computed: {
     offerString () {
       // NOTE: 実際にはコピペではなくてAPI経由で受け渡しする必要がある
-      window.localStorage.setItem('offerString', JSON.stringify(this.offer))
       return JSON.stringify(this.offer)
     },
-    candidateString () {
+    senderCandidateString () {
       // NOTE: 実際にはコピペではなくてAPI経由で受け渡しする必要がある
-      window.localStorage.setItem('candidatesString', JSON.stringify(this.candidates))
       return JSON.stringify(this.candidates)
     }
   },
@@ -147,6 +160,21 @@ export default {
         this.offer = offerSDP
       })
       console.log('接続準備完了')
+    },
+    acceptSDPAnswer () {
+      // アンサーを受け取ったらそれをリモートのSDPとして登録
+      this.connection.setRemoteDescription(JSON.parse(this.sdpAnswerString))
+    },
+    acceptsenderCandidateString () {
+      // ICE Candidatesを受け取る
+      const candidates = JSON.parse(this.senderCandidateString)
+      // それぞれのCandidateをブラウザのICEエージェントに渡す。
+      candidates.forEach(candidate => {
+        console.log('Sender adding candidate', candidate)
+        this.connection.addIceCandidate(candidate).catch((e) => {
+          console.eror('Sender addIceCandidate error', e)
+        })
+      })
     }
   }
 }

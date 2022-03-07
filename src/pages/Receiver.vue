@@ -7,6 +7,7 @@
       <v-row align-self-center class="justify-center">
         <v-btn @click="connectPeers">1. 接続開始</v-btn>
         <v-btn @click="onStartCreateCandidate">2. Offer StringからICE Candidatesの作成</v-btn>
+        <v-btn @click="onAcceptsenderCandidateString">3. Sender Candidatesの受け入れ</v-btn>
       </v-row>
       <H3>Connection</H3>
       <pre v-if="connection">
@@ -15,10 +16,14 @@
         localDescription["sdp"]: {{ connection['localDescription.sdp'] }}
         localDescription["type"]: {{ connection['localDescription.type'] }}
       </pre>
-      <span><v-icon @click="copyToClipboard(offerString)">mdi-content-copy</v-icon>1. Offer</span>
+      <span><v-icon @click="copyToClipboard(offerString)">mdi-content-copy</v-icon>1. SenderのOfferを貼り付けてね</span>
       <v-text-field v-model="offerString"></v-text-field>
-      <span><v-icon @click="copyToClipboard(candidateString)">mdi-content-copy</v-icon>2. Sender Candidates</span>
-      <v-text-field v-model="candidateString"></v-text-field>
+      <span><v-icon @click="copyToClipboard(sdpAnswerString)">mdi-content-copy</v-icon>2. SDP Answer</span>
+      <v-text-field v-model="sdpAnswerString"></v-text-field>
+      <span><v-icon @click="copyToClipboard(senderCandidateString)">mdi-content-copy</v-icon>3. Sender Candidateを貼り付けてね</span>
+      <v-text-field v-model="senderCandidateString"></v-text-field>
+      <span><v-icon @click="copyToClipboard(receiverCandidateString)">mdi-content-copy</v-icon>4. Reciver Candidate</span>
+      <v-text-field v-model="receiverCandidateString"></v-text-field>
       <H3>Channel</H3>
       <pre>
         {{ channel }}
@@ -31,6 +36,15 @@
       <pre>
         {{ candidates }}
       </pre>
+      <video
+        playsinline
+        autoplay
+        muted
+        width="100px"
+        height="100px"
+        ref="video"
+        id="video"
+      ></video>
     </v-flex>
   </v-layout>
 </template>
@@ -41,9 +55,11 @@ export default {
   name: 'webrtc',
   data () {
     return {
+      offerString: '',
       connection: null,
       channel: null,
       receivedMessages: [],
+      senderCandidateString: '',
       candidates: [],
       answer: null
     }
@@ -57,11 +73,11 @@ export default {
   mounted () {
   },
   computed: {
-    offerString () {
-      return window.localStorage.getItem('offerString')
+    sdpAnswerString () {
+      return JSON.stringify(this.answer) || ''
     },
-    candidateString () {
-      return window.localStorage.getItem('candidatesString')
+    receiverCandidateString () {
+      return JSON.stringify(this.candidates)
     }
   },
   methods: {
@@ -104,6 +120,7 @@ export default {
           this.candidates.push(e.candidate)
         }
       }
+      this.$refs.video = this.mediaStream
       console.log(this.connection)
       console.log('onconnect')
     },
@@ -117,6 +134,8 @@ export default {
       // 裏でICE Candidatesが作成されるので、自身のonicecandidateが発火される
       this.answer = await this.connection.createAnswer()
       this.connection.setLocalDescription(this.answer)
+      // NOTE: 実際にはコピペではなくてAPI経由で受け渡しする必要がある
+      window.localStorage.setItem('sdpAnswerString', JSON.stringify(this.answer))
     },
     receiveChannelCallback (e) {
       // データチャンネルの生成とイベントハンドラの登録
@@ -137,6 +156,16 @@ export default {
     handlechannelStatusChange (e) {
       console.log('handlechannelStatusChange----------')
       console.log(e)
+    },
+    onAcceptsenderCandidateString () {
+      // それぞれのCandidateをブラウザのICEエージェントに渡す
+      const candidates = JSON.parse(this.senderCandidateString)
+      candidates.forEach(candidate => {
+        console.log('Receiver adding candidate', candidate)
+        this.connection.addIceCandidate(candidate).catch(e => {
+          console.eror('Receiver addIceCandidate error', e)
+        })
+      })
     }
   }
 }
