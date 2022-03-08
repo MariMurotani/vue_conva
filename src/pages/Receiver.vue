@@ -61,7 +61,8 @@ export default {
       receivedMessages: [],
       senderCandidateString: '',
       candidates: [],
-      answer: null
+      answer: {},
+      mediaStream: null
     }
   },
   props: {
@@ -120,7 +121,6 @@ export default {
           this.candidates.push(e.candidate)
         }
       }
-      this.$refs.video = this.mediaStream
       console.log(this.connection)
       console.log('onconnect')
     },
@@ -135,7 +135,6 @@ export default {
       this.answer = await this.connection.createAnswer()
       this.connection.setLocalDescription(this.answer)
       // NOTE: 実際にはコピペではなくてAPI経由で受け渡しする必要がある
-      window.localStorage.setItem('sdpAnswerString', JSON.stringify(this.answer))
     },
     receiveChannelCallback (e) {
       // データチャンネルの生成とイベントハンドラの登録

@@ -56,7 +56,8 @@ export default {
   name: 'webrtc',
   data () {
     return {
-      video: null,
+      useMedia: null,
+      localStream: null,
       connection: null,
       localDescription: '',
       offer: '',
@@ -81,14 +82,6 @@ export default {
   created () {
   },
   mounted () {
-    // videoタグへカメラーストリームの設定
-    this.video = this.$refs.video
-    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-      navigator.mediaDevices.getUserMedia({ video: true }).then(stream => {
-        this.video.srcObject = stream
-        this.video.play()
-      })
-    }
   },
   computed: {
     offerString () {
@@ -151,6 +144,8 @@ export default {
       this.localStream = await navigator.mediaDevices.getUserMedia({ audio: false, video: true })
       this.localStream.getTracks().forEach(track => this.connection.addTrack(track, this.localStream))
       this.useMedia = true
+      this.$refs.video.srcObject = this.localStream
+      this.$refs.video.play()
 
       // config、データチャンネル、メディアストリーム情報を元にしたSDPを作成し、自身のSDPとして登録。
       // 裏でICE Candidatesが作成されるので、自身の onicecandidate が発火される
