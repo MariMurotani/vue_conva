@@ -8,6 +8,7 @@
         <v-btn @click="connectPeers">1. 接続開始</v-btn>
         <v-btn @click="acceptSDPAnswer">2. sdpAnswer受け入れ</v-btn>
         <v-btn @click="acceptsenderCandidateString">3. Receiver Candidate受け入れ</v-btn>
+        <v-btn @click="debugConnection">4. Debug</v-btn>
       </v-row>
       <H3>Connection</H3>
       <pre v-if="connection">
@@ -125,8 +126,6 @@ export default {
       // それぞれ、表示用の変数に追加、代入する
       this.channel = this.connection.createDataChannel('channel')
       this.channel.onmessage = e => { this.receivedMessages.push(e.data) }
-      this.channel.onopen = e => { this.channelOpen = true }
-      this.channel.onclose = e => { this.channelOpen = false }
 
       // ICE Candidatesが生成された時発火するイベントハンドラ
       // setLocalDescription(sdp)が呼ばれるとICE Candidatesの生成が裏で行われて発火する
@@ -138,6 +137,14 @@ export default {
         }
       }
 
+      // config、データチャンネル、メディアストリーム情報を元にしたSDPを作成し、自身のSDPとして登録。
+      // 裏でICE Candidatesが作成されるので、自身の onicecandidate が発火される
+      this.connection.createOffer().then(offerSDP => {
+        this.connection.setLocalDescription(offerSDP)
+        // 作成したSDPはReceiver側に渡す必要があるので this.offer 変数に代入
+        this.offer = offerSDP
+      })
+
       // ユーザがビデオを許可している時のみ、MediaStreamTrackを登録する
       // Sender側の画面でもビデオを使っている事が見えるようにする必要があるので
       // this.localStream 変数にメディアストリームを代入
@@ -147,13 +154,7 @@ export default {
       this.$refs.video.srcObject = this.localStream
       this.$refs.video.play()
 
-      // config、データチャンネル、メディアストリーム情報を元にしたSDPを作成し、自身のSDPとして登録。
-      // 裏でICE Candidatesが作成されるので、自身の onicecandidate が発火される
-      this.connection.createOffer().then(offerSDP => {
-        this.connection.setLocalDescription(offerSDP)
-        // 作成したSDPはReceiver側に渡す必要があるので this.offer 変数に代入
-        this.offer = offerSDP
-      })
+      console.log(this.connection)
       console.log('接続準備完了')
     },
     acceptSDPAnswer () {
@@ -170,6 +171,13 @@ export default {
           console.eror('Sender addIceCandidate error', e)
         })
       })
+    },
+    debugConnection () {
+      console.log(this.connection)
+      this.channel.send('test messages from sender')
+      let stream = this.$refs.video.srcObject
+      let tracks = stream.getTracks()
+      console.log(tracks)
     }
   }
 }

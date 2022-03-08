@@ -8,9 +8,11 @@
         <v-btn @click="connectPeers">1. 接続開始</v-btn>
         <v-btn @click="onStartCreateCandidate">2. Offer StringからICE Candidatesの作成</v-btn>
         <v-btn @click="onAcceptsenderCandidateString">3. Sender Candidatesの受け入れ</v-btn>
+        <v-btn @click="debugConnection">4. Debug</v-btn>
       </v-row>
       <H3>Connection</H3>
       <pre v-if="connection">
+        connectionState: {{ connection['connectionState'] }}
         iceConnectionState: {{ connection['iceConnectionState'] }}
         iceGatheringState: {{ connection['iceGatheringState'] }}
         localDescription["sdp"]: {{ connection['localDescription.sdp'] }}
@@ -139,22 +141,14 @@ export default {
     receiveChannelCallback (e) {
       // データチャンネルの生成とイベントハンドラの登録
       this.channel = e.channel
-      this.channel.onmessage = this.handleMessage
-      this.channel.onopen = this.handlechannelStatusChange
-      this.channel.onclose = this.handlechannelStatusChange
+      this.channel.onmessage = e => { this.receivedMessages.push(e.data) }
+      this.channel.onopen = e => { console.log('open data channel --') }
+      this.channel.onclose = e => { console.log('close data channel --') }
     },
     handleconnectionTrack (e) {
       console.log('handleconnectionTrack--------------')
       // Sender側から来たメディアストリームをthis.mediaStreamに代入
       this.mediaStream = e.streams[0]
-    },
-    handleMessage (e) {
-      console.log('handleMessage--------------')
-      console.log(e)
-    },
-    handlechannelStatusChange (e) {
-      console.log('handlechannelStatusChange----------')
-      console.log(e)
     },
     onAcceptsenderCandidateString () {
       // それぞれのCandidateをブラウザのICEエージェントに渡す
@@ -165,6 +159,13 @@ export default {
           console.eror('Receiver addIceCandidate error', e)
         })
       })
+    },
+    debugConnection () {
+      console.log(this.connection)
+      this.channel.send('test messages from receiver')
+      let stream = this.$refs.video.srcObject
+      let tracks = stream.getTracks()
+      console.log(tracks)
     }
   }
 }
